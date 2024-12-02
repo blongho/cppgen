@@ -1,7 +1,5 @@
 # C++ Program Boiler Plate Generator (CPPGen)
 
-# **CPPGen - C++ Project Generator**
-
 CPPGen is a command-line tool designed to simplify the creation of boilerplate code and directory structures for C++ projects. With support for customizable project types, build systems, and C++ standards, CPPGen helps developers get started quickly without worrying about the setup.
 
 ---
@@ -50,7 +48,7 @@ CPPGen is a command-line tool designed to simplify the creation of boilerplate c
 
 2. Compile the tool:
    ```bash
-   g++ -std=c++17 -o cppgen main.cpp
+   mkdir build && cd build && cmake .. && make && ./cppgen --help
    ```
 
 3. (Optional) Install system-wide:
@@ -159,8 +157,8 @@ This project is licensed under the [MIT License](LICENSE).
 ## **Contact**
 
 For issues, suggestions, or feedback, reach out at:
-- GitHub Issues: [https://github.com/your-repo/cppgen/issues](https://github.com/your-repo/cppgen/issues)
-- Email: youremail@example.com
+- GitHub Issues: [https://github.com/blongho/cppgen/issues](https://github.com/blongho/cppgen/issues)
+- Email: blongho02@gmail.com
 
 ---
 
