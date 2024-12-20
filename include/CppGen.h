@@ -1,17 +1,15 @@
 #ifndef CPP_GEN_H
 #define CPP_GEN_H
 #include <string>
-#include <iostream>
-#include <filesystem>
 #include <fstream>
 
 namespace blongho {
     class CppGen {
     public:
-        explicit CppGen(const std::string &projectName = "demo",
-                        const std::string &projectType = "console",
-                        const std::string &buildSystem = "cmake",
-                        const std::string &cppStandard = "17",
+        explicit CppGen(std::string projectName = "demo",
+                        std::string projectType = "console",
+                        std::string buildSystem = "cmake",
+                        std::string cppStandard = "17",
                         const bool &initGit = false);
 
         ~CppGen() = default;
@@ -24,6 +22,9 @@ namespace blongho {
 
         CppGen &operator=(CppGen &&) = delete;
 
+        /**
+         * Run the application
+         */
         void run() const;
 
     private:
@@ -33,8 +34,6 @@ namespace blongho {
         const std::string cppStd;
         const bool gitInit = false;
 
-        const std::string templatePath{"../templates"};
-
         void create_directories() const;
 
         void generate_files() const;
@@ -43,7 +42,20 @@ namespace blongho {
 
         [[nodiscard]] std::string generate_cmake_lists() const;
 
+        [[nodiscard]] std::string generate_test_cmake_lists() const;
+
         void list_directories() const;
+
+    public:
+        [[nodiscard]] std::string get_project_name() const;
+
+        [[nodiscard]] std::string get_project_type() const;
+
+        [[nodiscard]] std::string get_build_system() const;
+
+        [[nodiscard]] std::string get_cpp_std() const;
+
+        [[nodiscard]] bool is_git_init() const;
     };
 }
 

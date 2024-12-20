@@ -42,13 +42,12 @@ CPPGen is a command-line tool designed to simplify the creation of boilerplate c
 ### Build Instructions
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/cppgen.git
-   cd cppgen
+   git clone https://github.com/blongho/cppgen.git && cd cppgen
    ```
 
 2. Compile the tool:
    ```bash
-   mkdir build && cd build && cmake .. && make && ./cppgen --help
+   mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make && ./cppgen --help
    ```
 
 3. (Optional) Install system-wide:
@@ -110,7 +109,7 @@ MyConsoleApp/
 
 ### **Sample `CMakeLists.txt`**
 ```cmake
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10...3.30)
 project(MyConsoleApp)
 set(CMAKE_CXX_STANDARD 20)
 
@@ -145,7 +144,6 @@ Contributions are welcome! To contribute:
 1. Fork the repository.
 2. Create a new branch for your feature/bugfix.
 3. Submit a pull request with a detailed explanation.
-
 ---
 
 ## **License**

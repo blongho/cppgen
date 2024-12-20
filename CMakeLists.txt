@@ -10,9 +10,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 
-include_directories(templates)
-
-add_executable(app src/CppGen.cpp src/main.cpp)
+add_executable(cppgen src/CppGen.cpp src/main.cpp)
 
 enable_testing()
 add_subdirectory(tests)
