@@ -10,7 +10,7 @@ namespace blongho {
                         std::string projectType = "console",
                         std::string buildSystem = "cmake",
                         std::string cppStandard = "17",
-                        const bool &initGit = false);
+                        const bool &initGit = true);
 
         ~CppGen() = default;
 

@@ -60,7 +60,9 @@ git checkout -b feature/your-feature-name
 ### Commit Your Changes
 Write a clear commit message describing the changes:
 ```bash
-git commit -m "Add: [feature] description of your changes"
+git commit -m "Add: [feature] 
+
+           Description of your changes"
 ```
 
 ---

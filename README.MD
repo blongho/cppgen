@@ -1,14 +1,19 @@
 # C++ Program Boiler Plate Generator (CPPGen)
 
-CPPGen is a command-line tool designed to simplify the creation of boilerplate code and directory structures for C++ projects. With support for customizable project types, build systems, and C++ standards, CPPGen helps developers get started quickly without worrying about the setup.
-
+**cppgen** is a cross-platform, fast, and minimal C++ project generator.  
+Built in C++ with CMake, cppgen helps you quickly scaffold new C++ projects with best practices, CMakeLists, and folder structure ready.
+---
+![License](https://img.shields.io/github/license/blongho/cppgen)
+![Build](https://img.shields.io/github/actions/workflow/status/blongho/cppgen/build.yml)
+![Platform](https://img.shields.io/badge/platform-linux--windows--macos-blue)
 ---
 
 ## **Features**
 
-- **Customizable Project Creation**
-    - Supports project types: Console, Library, or GUI (planned).
-    - Configurable C++ standards (`C++11`, `C++17`, `C++20`).
+- 🚀 Generate C++ project templates in seconds
+- 📦 Cross-platform (Linux, Windows, macOS)
+- 🔧 Built with clean CMake architecture
+- 🛡️ Released under the MIT License
 
 - **Directory Structure**
     - Automatically generates a structured directory layout:
@@ -20,14 +25,6 @@ CPPGen is a command-line tool designed to simplify the creation of boilerplate c
       ├── include/
       ├── build/
       ```
-
-- **Embedded Templates**
-    - All templates are embedded directly into the executable for portability.
-
-- **Git Integration**
-    - Optionally initializes a Git repository.
-
----
 
 ## **Installation**
 
@@ -46,15 +43,12 @@ CPPGen is a command-line tool designed to simplify the creation of boilerplate c
    ```
 
 2. Compile the tool:
-   ```bash
-   mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make && ./cppgen --help
-   ```
-
-3. (Optional) Install system-wide:
-   ```bash
-   sudo mv cppgen /usr/local/bin/
-   ```
-
+### Linux / macOS / Windows
+```bash
+cmake -S . -B build
+cmake --build build
+sudo cmake --install build
+```
 ---
 
 ## **Usage**
@@ -78,22 +72,10 @@ cppgen --name <project_name> [options]
 
 #### Create a Console Application with C++20
 ```bash
-cppgen --name MyConsoleApp --type console --std C++20 --git
+cppgen --name MyConsoleApp --type console --std C++17 --git
 ```
 
-#### Create a Library Project
-```bash
-cppgen --name MyLibrary --type lib --build cmake
-```
-
-#### Create a GUI Project (Planned Feature)
-```bash
-cppgen --name MyGUIApp --type gui
-```
-
----
-
-## **Generated Project Structure**
+##### **Generated Project Structure**
 
 Example output for a console application:
 
@@ -132,9 +114,9 @@ int main() {
 
 ## **Future Features**
 - **GUI Support**: Generate boilerplate for GUI frameworks like Qt or GTK.
-- **Dependency Management**: Integrate with `vcpkg` or `Conan` for package management.
-- **Custom Templates**: Allow users to define their own templates.
-- **Documentation Generation**: Automatically create a detailed README.md.
+- **Library Support**: Generate boilerplate for library application
+- **Dependency Management**: Install via Chocolatey or NSIS installer or brew or apt.
+
 
 ---
 
@@ -157,7 +139,3 @@ This project is licensed under the [MIT License](LICENSE).
 For issues, suggestions, or feedback, reach out at:
 - GitHub Issues: [https://github.com/blongho/cppgen/issues](https://github.com/blongho/cppgen/issues)
 - Email: blongho02@gmail.com
-
----
-
-Would you like to tweak the README further or add specific sections?

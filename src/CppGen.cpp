@@ -80,7 +80,7 @@ std::string blongho::CppGen::generate_test_cmake_lists() const {
 void blongho::CppGen::list_directories() const {
     std::cout << "\nListing directories for " << get_project_name() << std::endl;
 #if defined(_WIN32)
-    std::system(("dir "+projectName).c_str());
+    std::system(("dir "+get_project_name()).c_str());
 #elif defined(__linux__) || defined(__unix__) || defined(__APPLE__)
     std::system(("ls -al " + get_project_name()).c_str());
 #endif
@@ -94,7 +94,7 @@ std::string blongho::CppGen::get_project_name() const {
         }
         return std::tolower(c);
     });
-    std::cout << "Project name is " << result << std::endl;
+    //std::cout << "Project name is " << result << std::endl;
     return result;
 }
 
@@ -123,4 +123,9 @@ bool blongho::CppGen::is_git_init() const {
 
 void blongho::CppGen::run() const {
     create_directories();
+    if(is_git_init()) {
+        std::cout << "Initializing git repository for " << get_project_name() << std::endl;
+        std::system(("cd " + get_project_name() + " && git init").c_str());
+    }
+    std::cout << "Done!" << std::endl;
 }
