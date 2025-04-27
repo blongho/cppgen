@@ -1,0 +1,16 @@
+BasedOnStyle: Google  # or LLVM, WebKit, Chromium — whichever you prefer
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+ColumnLimit: 120
+AllowShortFunctionsOnASingleLine: Empty
+BreakBeforeBraces: Allman   # "Allman" = New line before braces (common in C++)
+SortIncludes: true
+IncludeBlocks: Preserve
+ReflowComments: true
+SpacesInParentheses: false
+SpaceBeforeParens: ControlStatements
+PointerAlignment: Left
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true

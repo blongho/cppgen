@@ -1,0 +1,105 @@
+name: Build and Release cppgen (multi-platform)
+
+on:
+  push:
+    tags:
+      - 'v*'  # Only trigger on version tags like v1.0.0
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.22.0'
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Install dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake cpack build-essential fakeroot rpm nsis
+
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
+          choco install nsis -y
+
+      - name: Install dependencies (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install cmake
+
+      - name: Build project
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release
+
+      - name: Package project
+        run: |
+          cd build
+          cpack
+
+      - name: Rename artifacts
+        run: |
+          cd build
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            mv *.deb cppgen-${{ env.VERSION }}-ubuntu.deb || true
+            mv *.rpm cppgen-${{ env.VERSION }}-fedora.rpm || true
+          elif [ "${{ matrix.os }}" == "windows-latest" ]; then
+            mv *.exe cppgen-${{ env.VERSION }}-windows.exe || true
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            mv *.dmg cppgen-${{ env.VERSION }}-macos.dmg || true
+          fi
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cppgen-${{ matrix.os }}
+          path: |
+            build/*.deb
+            build/*.rpm
+            build/*.exe
+            build/*.dmg
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Generate SHA256 checksums
+        run: |
+          cd artifacts
+          find . -type f \( -name "*.deb" -o -name "*.rpm" -o -name "*.exe" -o -name "*.dmg" \) -exec sha256sum {} + > checksums.txt
+          cd ..
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/**/*     # upload all artifacts + checksums.txt
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

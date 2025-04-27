@@ -1,0 +1,37 @@
+name: Clang Format Check
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  clang-format-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Clang-Format
+        run: sudo apt-get install -y clang-format
+
+      - name: Run Clang-Format
+        run: |
+          echo "Checking formatting for .cpp and .h files..."
+          # Find only .cpp and .h files
+          FILES=$(find src tests include -type f \( -name "*.cpp" -o -name "*.h" \))
+
+          # Fail if no files are found (optional safety)
+          if [ -z "$FILES" ]; then
+            echo "No source files found to check."
+            exit 0
+          fi
+
+          # Run clang-format dry-run on each file
+          for file in $FILES; do
+            clang-format --dry-run --Werror "$file"
+          done

@@ -3,4 +3,4 @@
 #define CPPGEN_VERSION_MAJOR 1
 #define CPPGEN_VERSION_MINOR 0
 #define CPPGEN_VERSION_PATCH 1
-#endif //VERSION_H
+#endif  // VERSION_H
