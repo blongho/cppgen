@@ -126,6 +126,12 @@ Contributions are welcome! To contribute:
 1. Fork the repository.
 2. Create a new branch for your feature/bugfix.
 3. Submit a pull request with a detailed explanation.
+
+This project uses [clang-format](https://clang.llvm.org/docs/ClangFormat.html) to enforce code style.
+
+- Please run `clang-format -i src/*.cpp tests/*.cpp` before submitting Pull Requests.
+- Style is defined in the [.clang-format](./.clang-format) file.
+- GitHub Actions will automatically verify style compliance.
 ---
 
 ## **License**

@@ -52,6 +52,51 @@ endif ()
 
 include(CPack)
 
+# Formatting: make format
+find_program(CLANG_FORMAT_BIN clang-format)
+
+if(CLANG_FORMAT_BIN)
+    file(GLOB_RECURSE ALL_SOURCE_FILES
+            src/*.cpp
+            src/*.h
+            tests/*.cpp
+            tests/*.h
+            include/*.h
+    )
+
+    add_custom_target(format
+            COMMAND ${CLANG_FORMAT_BIN} -i ${ALL_SOURCE_FILES}
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Formatting source files with clang-format"
+    )
+
+    add_custom_target(check-format
+            COMMAND ${CLANG_FORMAT_BIN} --dry-run --Werror ${ALL_SOURCE_FILES}
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Checking source files formatting with clang-format"
+    )
+else()
+    message(WARNING "clang-format not found. 'make format' and 'make check-format' are disabled.")
+endif()
+
+
+# Cppcheck target
+find_program(CPPCHECK_BIN cppcheck)
+
+if(CPPCHECK_BIN)
+    add_custom_target(cppcheck
+            COMMAND ${CPPCHECK_BIN} --enable=all --inconclusive --std=c++17
+            --suppress=missingIncludeSystem
+            src/*.cpp tests/*.cpp include/*.h
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+            COMMENT "Running cppcheck static analysis"
+    )
+else()
+    message(WARNING "cppcheck not found. 'make cppcheck' is disabled.")
+endif()
+
+
+# Build testing if testing is enabled
 if (BUILD_TESTING)
     enable_testing()
     add_subdirectory(tests)

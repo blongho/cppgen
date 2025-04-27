@@ -3,7 +3,7 @@ name: Build and Package cppgen
 on:
   push:
     branches:
-      - main
+      - master
     tags:
       - 'v*'
   pull_request:
@@ -27,18 +27,18 @@ jobs:
           cmake-version: '3.22.0'
 
       - name: Install dependencies (Linux)
-        if: runner.os == 'Linux'
+        if: runner.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential fakeroot rpm
 
       - name: Install dependencies (macOS)
-        if: runner.os == 'macOS'
+        if: runner.os == 'macos-latest'
         run: |
           brew install cmake
 
       - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
+        if: runner.os == 'windows-latest'
         run: |
           choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
           choco install nsis -y
